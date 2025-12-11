@@ -15,20 +15,20 @@ export interface Question {
 }
 
 export interface QuizSession {
-  id: string;
-  userId: string;
-  questions: Question[];
-  currentQuestionIndex: number;
-  answers: Map<string, number>;
-  currentDifficulty: Difficulty;
-  score: number;
-  startTime: Date;
-  endTime?: Date;
+  sessionId: string;
+  question: Question;
+  totalQuestions: number;
+  currentQuestion: number;
 }
 
-export interface AnswerSubmission {
-  questionId: string;
-  answerIndex: number;
+export interface AnswerResponse {
+  isCorrect: boolean;
+  nextQuestion?: Question;
+  isComplete: boolean;
+  currentQuestion: number;
+  totalQuestions: number;
+  score: number;
+  currentDifficulty: Difficulty;
 }
 
 export interface QuizResult {
@@ -39,27 +39,27 @@ export interface QuizResult {
   percentage: number;
   duration: number;
   difficultyProgression: Difficulty[];
+  questions: Array<{
+    question: Question;
+    userAnswer: number | undefined;
+    isCorrect: boolean;
+  }>;
 }
 
 export interface User {
   id: string;
   username: string;
   email: string;
-  passwordHash: string;
-  createdAt: Date;
   totalQuizzes: number;
   bestScore: number;
   averageScore: number;
+  createdAt?: string;
 }
 
-export interface UserScore {
-  userId: string;
-  username: string;
-  score: number;
-  percentage: number;
-  totalQuestions: number;
-  completedAt: Date;
-  sessionId: string;
+export interface AuthResponse {
+  message: string;
+  token: string;
+  user: User;
 }
 
 export interface LeaderboardEntry {
